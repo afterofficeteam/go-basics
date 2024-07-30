@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math"
+	"reflect"
+	"sort"
 	"strconv"
 
 	"github.com/afteroffice/go-basics/model"
@@ -17,8 +19,8 @@ func main() {
 	// fmt.Println("sum3Number(-10, 6, 4) =", sum3Number(-10, 6, 4))
 	// fmt.Println("=====")
 
-	// fmt.Println("mean3Number(1, 2, 3) =", mean3Number(1, 2, 3)) // 2.0
-	// fmt.Println("mean3Number(4, 4, 5) =", mean3Number(4, 4, 5)) // 4.333
+	// fmt.Println("mean3Number(1, 2, 3) =", mean3Number(1, 2, 3))       // 2.0
+	// fmt.Println("mean3Number(4, 4, 5) =", mean3Number(4, 4, 5))       // 4.333
 	// fmt.Println("mean3Number(10, 20, 50) =", mean3Number(10, 20, 50)) // 26.667
 	// fmt.Println("=====")
 
@@ -37,6 +39,7 @@ func main() {
 	// fmt.Println("findDuplicateNumber(1,2,3,4,5,6,7,8,9,10) =", findDuplicateNumber([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 5})) // 5
 	// fmt.Println("=====")
 
+	// fmt.Println("printTypeAndValue(12.34) =", printTypeAndValue(12))    // int: 12
 	// fmt.Println("printTypeAndValue(12.34) =", printTypeAndValue(12.34)) // float64: 12.34
 	// fmt.Println(`printTypeAndValue("tes") =`, printTypeAndValue("tes")) // string: tes
 	// fmt.Println("printTypeAndValue(true) =", printTypeAndValue(true))   // bool: true
@@ -60,7 +63,7 @@ func main() {
 
 	// st := students[0]
 	// changeName(&st, "Ethan")
-	// fmt.Println(st.Name)
+	// fmt.Println("st.Name =", st.Name)
 }
 
 func basics() {
@@ -114,14 +117,12 @@ func basics() {
 
 // sum3Number adalah jumlah dari 3 angka (basic function)
 func sum3Number(a int, b int, c int) int {
-	// write code here
-	return 0
+	return a + b + c
 }
 
 // mean3Number adalah nilai rata-rata dari 3 angka (parameter & return berbeda)
 func mean3Number(a, b, c int) float64 {
-	// write code here
-	return 0
+	return float64(a+b+c) / 3
 }
 
 // Cari nilai rata-rata data arr [1,2,3,4,5] = 3 (for-range)
@@ -132,34 +133,80 @@ func mean(arr []int) float64 {
 
 // isPalindrome check wether str is palindrome or not. "katak" = true. (for-i, if)
 func isPalindrome(str string) bool {
-	// write code here
-	return false
+	for i := 0; i < len(str); i++ {
+		j := len(str) - 1 - i
+
+		if str[i] != str[j] {
+			return false
+		}
+	}
+	return true
 }
 
 // which number is duplicate? [1,2,3,4,2,5] = 2 (map, for-range-map)
 func findDuplicateNumber(arr []int) int {
-	// write code here
-	return 0
+	tempMap := map[int]bool{}
+	for _, value := range arr {
+		if _, found := tempMap[value]; found {
+			return value
+		}
+	}
+	return -1 // ga ketemu duplikat
 }
 
 // print Type and Value of data (learn interface{} as generic)
+// contoh: "string: Hello" | "int: 123"
 func printTypeAndValue(data interface{}) string {
-	// write code here
-	return "tipe_data: value" // contoh: "string: Hello" | "int: 123"
+	// Solution 1: use "type assertion"
+	if value, ok := data.(int); ok {
+		return fmt.Sprintf("int: %d", value)
+	}
+	if value, ok := data.(float64); ok {
+		return fmt.Sprintf("float64: %f", value)
+	}
+	if value, ok := data.(string); ok {
+		return fmt.Sprintf("string: %s", value)
+	}
+	if value, ok := data.(bool); ok {
+		return fmt.Sprintf("bool: %t", value)
+	}
+
+	// Solution 2: use "reflect" package
+	typeOf := reflect.TypeOf(data)
+	switch typeOf.String() {
+	case "int":
+		return fmt.Sprintf("int: %d", data.(int))
+	case "float64":
+		return fmt.Sprintf("float64: %f", data.(float64))
+	case "string":
+		return fmt.Sprintf("string: %s", data.(string))
+	case "bool":
+		return fmt.Sprintf("bool: %t", data.(bool))
+	}
+
+	// Solution 3: utilize fmt.Sprintf's "formatting" capabilities, then return string
+	return fmt.Sprintf("%T: %v", data, data)
 }
 
 // Sort & filter Students. exam score >= minScore, sort by name (using struct)
 func findStudents(students []model.Student, minScore int, isSortByName bool) []model.Student {
-	// write filter code here
-
-	if isSortByName {
-		// write sorting code here
+	temp := []model.Student{}
+	for _, st := range students {
+		if st.Score >= minScore {
+			temp = append(temp, st)
+		}
 	}
 
-	return []model.Student{}
+	if isSortByName {
+		sort.Slice(temp, func(i, j int) bool {
+			return temp[i].Name < temp[j].Name
+		})
+	}
+
+	return temp
 }
 
 // mutate Student data (pointer)
 func changeName(student *model.Student, name string) {
-	// write code here
+	student.Name = name
 }

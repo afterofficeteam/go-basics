@@ -7,11 +7,12 @@ type Student struct {
 	Score int    // public
 }
 
-// in golang compiler, this func SetId() is equivalent with: func SetId(s *Student, id int) {}
-// func (s *Student) SetId(id int) {
-// 	s.id = id
-// }
+// in golang compiler, this func SetId() is equivalent with:
+// func SetId(s *Student, id int) {}
+func (s *Student) SetId(id int) {
+	s.id = id
+}
 
-// func (s Student) GetId() int {
-// 	return s.id
-// }
+func (s Student) GetId() int {
+	return s.id
+}
