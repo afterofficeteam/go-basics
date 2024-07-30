@@ -127,8 +127,11 @@ func mean3Number(a, b, c int) float64 {
 
 // Cari nilai rata-rata data arr [1,2,3,4,5] = 3 (for-range)
 func mean(arr []int) float64 {
-	// write code here
-	return 0
+	sum := 0
+	for _, value := range arr {
+		sum += value
+	}
+	return float64(sum) / float64(len(arr))
 }
 
 // isPalindrome check wether str is palindrome or not. "katak" = true. (for-i, if)
