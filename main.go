@@ -14,9 +14,9 @@ func main() {
 	fmt.Println("start main")
 	// basics()
 
-	// fmt.Println("sum3Number(1, 2, 3) =", sum3Number(1, 2, 3))
-	// fmt.Println("sum3Number(3, 5, 7) =", sum3Number(3, 5, 7))
-	// fmt.Println("sum3Number(-10, 6, 4) =", sum3Number(-10, 6, 4))
+	// fmt.Println("sum3Number(1, 2, 3) =", sum3Number(1, 2, 3)) // 6
+	// fmt.Println("sum3Number(3, 5, 7) =", sum3Number(3, 5, 7)) // 15
+	// fmt.Println("sum3Number(-10, 6, 4) =", sum3Number(-10, 6, 4)) // 0
 	// fmt.Println("=====")
 
 	// fmt.Println("mean3Number(1, 2, 3) =", mean3Number(1, 2, 3))       // 2.0
@@ -31,12 +31,14 @@ func main() {
 
 	// fmt.Println(`isPalindrome("katak") =`, isPalindrome("katak"))
 	// fmt.Println(`isPalindrome("golang") =`, isPalindrome("golang"))
-	// fmt.Println(`isPalindrome("1234567890987654321") =`, isPalindrome("1234567890987654321"))
-	// fmt.Println(`isPalindrome("1234567890887654321") =`, isPalindrome("1234567890887654321"))
+	// fmt.Println(`isPalindrome("1234567890987654321") =`, isPalindrome("1234567890987654321")) // true
+	// fmt.Println(`isPalindrome("1234567890887654321") =`, isPalindrome("1234567890887654321")) // false
 	// fmt.Println("=====")
 
-	// fmt.Println("findDuplicateNumber(1,2,3,3,4,5) =", findDuplicateNumber([]int{1, 2, 3, 3, 4, 5}))                      // 3
-	// fmt.Println("findDuplicateNumber(1,2,3,4,5,6,7,8,9,10) =", findDuplicateNumber([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 5})) // 5
+	// ans, found := findDuplicateNumber([]int{1, 2, 3, 3, 4, 5})
+	// fmt.Println("findDuplicateNumber(1,2,3,3,4,5) =", ans, found) // 3, true
+	// findDuplicateNumber([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 5})
+	// fmt.Println("findDuplicateNumber(1,2,3,4,5,6,7,8,9,5) =", ans, found) // 5, true
 	// fmt.Println("=====")
 
 	// fmt.Println("printTypeAndValue(12.34) =", printTypeAndValue(12))    // int: 12
@@ -67,38 +69,45 @@ func main() {
 }
 
 func basics() {
+	// variable string
+	// var title string = "golang basics"
 	title := "golang basics"
 	fmt.Println("Hello, welcome to", title)
+	fmt.Println("Hello,", "welcome", "to", title)
 
 	// basic data types
 	angka := 987                   // int
 	angkaBerkoma := 12.34567       // float64
-	angka32 := int32(angkaBerkoma) // int32 value = 12
-	fmt.Printf("%d %f %d\n", angka, angkaBerkoma, angka32)
-	fmt.Printf("%.2f %.3f %.4f %.10f\n", angkaBerkoma, angkaBerkoma, angkaBerkoma, math.Pow(angkaBerkoma, 2))
+	angka32 := int32(angkaBerkoma) // int32; value = 12
+
+	// angka, angkaBerkoma, angka32 := 987, 12.34567, int32(angkaBerkoma) // alternative way of assignment
+
+	fmt.Printf("angka = %d %f %d\n", angka, angkaBerkoma, angka32)
+	fmt.Printf("angkaBerkoma = %.2f %.3f %.4f %.10f\n", angkaBerkoma, angkaBerkoma, angkaBerkoma, math.Pow(angkaBerkoma, 2))
 
 	var semangatBelajar bool // bool = false (zero-value)
+	fmt.Printf("semangatBelajar = %t %T\n", semangatBelajar, semangatBelajar)
 	semangatBelajar = true
-	// semangatBelajar := true
+	fmt.Printf("semangatBelajar = %t %T\n", semangatBelajar, semangatBelajar)
 
+	// 2 way to write constants
 	const PI = 3.14
 	const ROLE_OWNER = "owner"
 	const (
 		STATUS_200 = "OK"
 		STATUS_400 = "Bad Request"
 	)
+	fmt.Printf("PI = %f; STATUS = %s\n", PI, STATUS_200)
 
-	fmt.Printf("%s %t\n", title, semangatBelajar)
-	fmt.Printf("%f %s\n", PI, STATUS_200)
-	fmt.Printf("%v %T\n", title, title) // print value, type
-	fmt.Printf("%v\n", []byte(title))   // print []byte
+	fmt.Printf("title = %v %T\n", title, title) // print value, type
+	fmt.Printf("%v\n", []byte(title))           // print []byte
 
 	fmt.Println("=====")
 
 	// convert int to string
 	angkaString := strconv.Itoa(angka)
 	// angkaString := fmt.Sprintf("%d", angka)
-	fmt.Printf("%s\n", angkaString)
+	fmt.Printf("angkaString = %s\n", angkaString)
 
 	// convert string to int
 	angka, err := strconv.Atoi(angkaString)
@@ -107,11 +116,12 @@ func basics() {
 	}
 
 	// convert string to float64
+	angkaString = "123.456"
 	angkaBerkoma, err = strconv.ParseFloat(angkaString, 64)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%d %f\n", angka, angkaBerkoma)
+	fmt.Printf("angka = %d %f\n", angka, angkaBerkoma)
 	fmt.Println("=====")
 }
 
@@ -147,14 +157,19 @@ func isPalindrome(str string) bool {
 }
 
 // which number is duplicate? [1,2,3,4,2,5] = 2 (map, for-range-map)
-func findDuplicateNumber(arr []int) int {
+func findDuplicateNumber(arr []int) (int, bool) {
 	tempMap := map[int]bool{}
 	for _, value := range arr {
+		// _, found := tempMap[value]
+		// if found {
+		// 	return value
+		// }
+
 		if _, found := tempMap[value]; found {
-			return value
+			return value, true
 		}
 	}
-	return -1 // ga ketemu duplikat
+	return -1, false // ga ketemu duplikat
 }
 
 // print Type and Value of data (learn interface{} as generic)
@@ -192,7 +207,7 @@ func printTypeAndValue(data interface{}) string {
 }
 
 // Sort & filter Students. exam score >= minScore, sort by name (using struct)
-func findStudents(students []model.Student, minScore int, isSortByName bool) []model.Student {
+func findStudents(students []model.Student, minScore float64, isSortByName bool) []model.Student {
 	temp := []model.Student{}
 	for _, st := range students {
 		if st.Score >= minScore {
