@@ -64,38 +64,45 @@ func main() {
 }
 
 func basics() {
+	// variable string
+	// var title string = "golang basics"
 	title := "golang basics"
 	fmt.Println("Hello, welcome to", title)
+	fmt.Println("Hello,", "welcome", "to", title)
 
 	// basic data types
 	angka := 987                   // int
 	angkaBerkoma := 12.34567       // float64
-	angka32 := int32(angkaBerkoma) // int32 value = 12
-	fmt.Printf("%d %f %d\n", angka, angkaBerkoma, angka32)
-	fmt.Printf("%.2f %.3f %.4f %.10f\n", angkaBerkoma, angkaBerkoma, angkaBerkoma, math.Pow(angkaBerkoma, 2))
+	angka32 := int32(angkaBerkoma) // int32; value = 12
+
+	// angka, angkaBerkoma, angka32 := 987, 12.34567, int32(angkaBerkoma) // alternative way of assignment
+
+	fmt.Printf("angka = %d %f %d\n", angka, angkaBerkoma, angka32)
+	fmt.Printf("angkaBerkoma = %.2f %.3f %.4f %.10f\n", angkaBerkoma, angkaBerkoma, angkaBerkoma, math.Pow(angkaBerkoma, 2))
 
 	var semangatBelajar bool // bool = false (zero-value)
+	fmt.Printf("semangatBelajar = %t %T\n", semangatBelajar, semangatBelajar)
 	semangatBelajar = true
-	// semangatBelajar := true
+	fmt.Printf("semangatBelajar = %t %T\n", semangatBelajar, semangatBelajar)
 
+	// 2 way to write constants
 	const PI = 3.14
 	const ROLE_OWNER = "owner"
 	const (
 		STATUS_200 = "OK"
 		STATUS_400 = "Bad Request"
 	)
+	fmt.Printf("PI = %f; STATUS = %s\n", PI, STATUS_200)
 
-	fmt.Printf("%s %t\n", title, semangatBelajar)
-	fmt.Printf("%f %s\n", PI, STATUS_200)
-	fmt.Printf("%v %T\n", title, title) // print value, type
-	fmt.Printf("%v\n", []byte(title))   // print []byte
+	fmt.Printf("title = %v %T\n", title, title) // print value, type
+	fmt.Printf("%v\n", []byte(title))           // print []byte
 
 	fmt.Println("=====")
 
 	// convert int to string
 	angkaString := strconv.Itoa(angka)
 	// angkaString := fmt.Sprintf("%d", angka)
-	fmt.Printf("%s\n", angkaString)
+	fmt.Printf("angkaString = %s\n", angkaString)
 
 	// convert string to int
 	angka, err := strconv.Atoi(angkaString)
@@ -104,11 +111,12 @@ func basics() {
 	}
 
 	// convert string to float64
+	angkaString = "123.456"
 	angkaBerkoma, err = strconv.ParseFloat(angkaString, 64)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%d %f\n", angka, angkaBerkoma)
+	fmt.Printf("angka = %d %f\n", angka, angkaBerkoma)
 	fmt.Println("=====")
 }
 
