@@ -174,3 +174,10 @@ func findStudents(students []model.Student, minScore float64, isSortByName bool)
 func changeName(student *model.Student, name string) {
 	// write code here
 }
+
+// jika waktu masih ada, bahas dibawah ini
+func merge2slices(slice1 []int, slice2 []int) []int {
+	// append 2 slices
+	slice3 := append(slice1, slice2...)
+	return slice3
+}
