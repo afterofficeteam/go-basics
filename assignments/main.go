@@ -1,5 +1,7 @@
 package main
 
+// https://forms.gle/tU4iDZeFFG2RmhE66
+
 import "fmt"
 
 func main() {

@@ -9,13 +9,13 @@ type Student struct {
 }
 
 // in golang, func SetId() is equivalent with: func SetId(s *Student, id int)
-// func (s *Student) SetId(id int) {
-// 	s.id = id
-// }
+func (s *Student) SetId(id int) {
+	s.id = id
+}
 
-// func (s Student) GetId() int {
-// 	return s.id
-// }
+func (s Student) GetId() int {
+	return s.id
+}
 
 var SingeltonStudent = Student{
 	id:    99,
