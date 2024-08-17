@@ -186,20 +186,25 @@ func tesDeck() {
 	deck := Deck{}
 	deck.New()
 
-	top5Cards := deck.PeekTop(3)
+	top5Cards := deck.PeekTop(5)
+	fmt.Println("PeekTop 5")
 	for _, c := range top5Cards {
 		fmt.Println(c.ToString())
 	}
 	fmt.Println("---")
-
-	fmt.Println(deck.PeekCardAtIndex(12).ToString()) // Queen Spade
-	fmt.Println(deck.PeekCardAtIndex(13).ToString()) // King Spade
-	fmt.Println(deck.PeekCardAtIndex(14).ToString()) // Ace Heart
-	fmt.Println(deck.PeekCardAtIndex(15).ToString()) // 2 Heart
-	fmt.Println("---")
+  
+  fmt.Println("PeekCardAtIndex index array 10 - 15")
+	fmt.Println(deck.PeekCardAtIndex(10).ToString()) // Jack Spade
+	fmt.Println(deck.PeekCardAtIndex(11).ToString()) // Queen Spade
+	fmt.Println(deck.PeekCardAtIndex(12).ToString()) // King Spade
+	fmt.Println(deck.PeekCardAtIndex(13).ToString()) // Ace Heart
+	fmt.Println(deck.PeekCardAtIndex(14).ToString()) // 2 Heart
+	fmt.Println(deck.PeekCardAtIndex(15).ToString()) // 3 Heart
+	fmt.Println("---\n")
 
 	deck.Shuffle()
-	top5Cards = deck.PeekTop(10)
+	top5Cards = deck.PeekTop(5)
+	fmt.Println("Deck Shuffle")
 	for _, c := range top5Cards {
 		fmt.Println(c.ToString())
 	}
@@ -208,6 +213,7 @@ func tesDeck() {
 	deck.New()
 	deck.Cut(5)
 	bottomCards := deck.PeekBottom(10)
+	fmt.Println("Deck Cut")
 	for _, c := range bottomCards {
 		fmt.Println(c.ToString())
 	}
